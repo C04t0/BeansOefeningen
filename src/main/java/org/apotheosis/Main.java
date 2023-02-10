@@ -3,8 +3,12 @@ package org.apotheosis;
 
 import configuration.ProjectConfig;
 import configuration.ProjectConfigStereotype;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class Main {
@@ -32,7 +36,7 @@ public class Main {
         Car car2 = new Car();
         car2.setName("Antoinette");
         Supplier<Car> carSupplier = () -> car2;
-        context.registerBean("car2", Car.class, carSupplier);
+        context.registerBean("car", Car.class, carSupplier, (BeanDefinition bd) -> bd.setPrimary(true));
         Car carBean = context.getBean(Car.class);
 
         System.out.println(carBean.getName());
@@ -49,9 +53,17 @@ public class Main {
         Car car7 = new Car();
         car7.setColour("red");
 
+        List<Car> carList = new ArrayList<>();
 
 
+        for (int i = 0; i < 10; i++) {
+            Car newBeanCar = context.getBean(Car.class);
+            if (newBeanCar.getColour() == "blue") {
+                carList.add(newBeanCar);
+            }
+        }
 
+        System.out.println(carList);
 
 
 

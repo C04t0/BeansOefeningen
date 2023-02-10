@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 public class CarStereotype {
 
     private String name;
-
     private  String colour;
 
     @PostConstruct
